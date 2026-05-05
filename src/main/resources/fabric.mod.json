@@ -1,8 +1,8 @@
 {
 	"schemaVersion": 1,
-	"id": "mystic-autofly",
+	"id": "autofly",
 	"version": "${version}",
-	"name": "Mystic Autofly",
+	"name": "Autofly",
 	"description": "This mod is used to automatically enable /fly when switching worlds or logging in!",
 	"authors": [
 		"AlexTheNerd"
@@ -11,20 +11,20 @@
 		"homepage": "https://www.atn.gg/"
 	},
 	"license": "CC0-1.0",
-	"icon": "assets/mystic-autofly/icon.png",
+	"icon": "assets/autofly/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"gg.atn.MysticAutofly"
+			"gg.atn.Autofly"
 		],
 		"client": [
-			"gg.atn.client.MysticAutoflyClient"
+			"gg.atn.client.AutoflyClient"
 		]
 	},
 	"mixins": [
-		"mystic-autofly.mixins.json",
+		"autofly.mixins.json",
 		{
-			"config": "mystic-autofly.client.mixins.json",
+			"config": "autofly.client.mixins.json",
 			"environment": "client"
 		}
 	],

@@ -13,7 +13,7 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
 import net.minecraft.client.MinecraftClient;
 
-public class MysticAutoflyClient implements ClientModInitializer {
+public class AutoflyClient implements ClientModInitializer {
 	public static KeyBinding enabled;
 	public static boolean active = true;
 	private static int pendingCheckTicks = -1;
@@ -22,10 +22,10 @@ public class MysticAutoflyClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		enabled = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-				"key.mystic-autofly.toggle", // Translation key
+				"key.autofly.toggle", // Translation key
 				InputUtil.Type.KEYSYM, // KEYSYM for keyboard, MOUSE for mouse
 				GLFW.GLFW_KEY_R, // Default key
-				"key.categories.mystic-autofly" // Category
+				"key.categories.autofly" // Category
 			));
 
 		// Toggle `active` when the keybind is pressed
@@ -33,7 +33,7 @@ public class MysticAutoflyClient implements ClientModInitializer {
 			if (client.player == null) return;
 			while (enabled.wasPressed()) {
 				active = !active;
-				client.player.sendMessage(Text.literal("MysticAutofly " + (active ? "enabled" : "disabled")), true);
+				client.player.sendMessage(Text.literal("Autofly " + (active ? "enabled" : "disabled")), true);
 			}
 			// delayed execution
 			if (pendingCheckTicks > 0) {

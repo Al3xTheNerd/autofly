@@ -1,4 +1,4 @@
-# Mystic Autofly
+# Autofly
 
 ## Setup
 

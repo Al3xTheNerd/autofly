@@ -18,7 +18,7 @@ loom {
 	splitEnvironmentSourceSets()
 
 	mods {
-		"mystic-autofly" {
+		"autofly" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
