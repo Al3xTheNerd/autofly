@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "mystic-autofly",
+	"version": "${version}",
+	"name": "Mystic Autofly",
+	"description": "This mod is used to automatically enable /fly when switching worlds or logging in!",
+	"authors": [
+		"AlexTheNerd"
+	],
+	"contact": {
+		"homepage": "https://www.atn.gg/"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/mystic-autofly/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"gg.atn.MysticAutofly"
+		],
+		"client": [
+			"gg.atn.client.MysticAutoflyClient"
+		]
+	},
+	"mixins": [
+		"mystic-autofly.mixins.json",
+		{
+			"config": "mystic-autofly.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.18.2",
+		"minecraft": "~1.21.8",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
