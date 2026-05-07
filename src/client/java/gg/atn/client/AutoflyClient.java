@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientWorldEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -44,11 +45,25 @@ public class AutoflyClient implements ClientModInitializer {
 			}
 		});
 
+		// When running /gms
+        ClientSendMessageEvents.ALLOW_COMMAND.register((command) -> {
+            if (command.equalsIgnoreCase("gms")) {
+                pendingCheckTicks = 10;
+            }
+            return true;
+        });
+		// When teleporting to another dimension
 		ClientWorldEvents.AFTER_CLIENT_WORLD_CHANGE.register((client, world) -> pendingCheckTicks = 15);
+		// When first logging into the server
 		ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> pendingCheckTicks = 20);
+
 
 	}
 	private void checkAndEnableFlight(MinecraftClient client) {
+			// Retry 10 ticks later if it failed to load client data
+			if (client == null) {
+				pendingCheckTicks = 10;
+			}
 			if (!active) return; // don't do anything if disabled
 			if (client.player == null) return; // no null players
 			if (client.getServer() != null) return; // running an integrated server (singleplayer) — skip
