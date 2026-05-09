@@ -12,21 +12,23 @@ import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.client.MinecraftClient;
 
 public class AutoflyClient implements ClientModInitializer {
 	public static KeyBinding enabled;
 	public static boolean active = true;
 	private static int pendingCheckTicks = -1;
-
+	private static final KeyBinding.Category KeyCategory = KeyBinding.Category.create(Identifier.of("autofly", "autofly"));
 
 	@Override
 	public void onInitializeClient() {
+		
 		enabled = KeyBindingHelper.registerKeyBinding(new KeyBinding(
 				"key.autofly.toggle", // Translation key
 				InputUtil.Type.KEYSYM, // KEYSYM for keyboard, MOUSE for mouse
 				GLFW.GLFW_KEY_R, // Default key
-				"key.categories.autofly" // Category
+				KeyCategory
 			));
 
 		// Toggle `active` when the keybind is pressed
@@ -67,7 +69,6 @@ public class AutoflyClient implements ClientModInitializer {
 			if (!active) return; // don't do anything if disabled
 			if (client.player == null) return; // no null players
 			if (client.getServer() != null) return; // running an integrated server (singleplayer) — skip
-			if ("minecraft:pinataworld".equals(client.player.getWorld().getRegistryKey().getValue().toString())) return; // don't try enabling in pinata
 			if (client.player.getAbilities().flying) return; // do nothing if already flying
 			if (client.player.getAbilities().allowFlying) return; // do nothing if already flying
 			client.getNetworkHandler().sendChatCommand("fly");
