@@ -61,15 +61,15 @@ public class AutoflyClient implements ClientModInitializer {
 	}
 	private void checkAndEnableFlight(MinecraftClient client) {
 			// Retry 10 ticks later if it failed to load client data
-			if (client == null) {
+			if (client == null | client.player == null | client.world == null) {
 				pendingCheckTicks = 10;
 			}
 			if (!active) return; // don't do anything if disabled
-			if (client.player == null) return; // no null players
 			if (client.getServer() != null) return; // running an integrated server (singleplayer) — skip
-			if ("minecraft:pinataworld".equals(client.player.getWorld().getRegistryKey().getValue().toString())) return; // don't try enabling in pinata
 			if (client.player.getAbilities().flying) return; // do nothing if already flying
 			if (client.player.getAbilities().allowFlying) return; // do nothing if already flying
-			client.getNetworkHandler().sendChatCommand("fly");
+			client.getNetworkHandler().sendChatCommand("fly enable");
+
+			pendingCheckTicks = 10;
 	}
 }
